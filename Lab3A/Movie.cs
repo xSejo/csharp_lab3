@@ -53,7 +53,7 @@ namespace Lab3A
 
         public string Decrypt()
         {
-            return null;
+            return Encrypt();
         }
     }
 }
