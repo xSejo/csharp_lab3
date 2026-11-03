@@ -18,14 +18,7 @@ namespace Lab3A
             bool exit = false;
             while (!exit)
             {
-                Console.WriteLine("\n--- Media Collection Menu ---");
-                Console.WriteLine("1. List All Books");
-                Console.WriteLine("2. List All Movies");
-                Console.WriteLine("3. List All Songs");
-                Console.WriteLine("4. List All Media");
-                Console.WriteLine("5. Search All Media by Title");
-                Console.WriteLine("6. Exit Program");
-                Console.Write("Enter your choice: ");
+                DisplayMenu();
 
                 // Error checking for user input
                 if (int.TryParse(Console.ReadLine(), out int choice))
@@ -140,6 +133,18 @@ namespace Lab3A
             {
                 Console.WriteLine($"An error occurred while reading the file: {ex.Message}");
             }
+        }
+
+        static void DisplayMenu()
+        {
+            Console.WriteLine("\n--- Media Collection Menu ---");
+            Console.WriteLine("1. List All Books");
+            Console.WriteLine("2. List All Movies");
+            Console.WriteLine("3. List All Songs");
+            Console.WriteLine("4. List All Media");
+            Console.WriteLine("5. Search All Media by Title");
+            Console.WriteLine("6. Exit Program");
+            Console.Write("Enter your choice: ");
         }
 
 
