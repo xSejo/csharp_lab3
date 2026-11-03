@@ -19,7 +19,37 @@ namespace Lab3A
 
         public string Encrypt()
         {
-            return null;
+            char[] chars = Summary.ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+            {
+                char letter = chars[i];
+
+                if (letter >= 'a' && letter <= 'z')
+                {
+                    if (letter > 'm')
+                    {
+                        letter -= (char)13;
+                    }
+                    else
+                    {
+                        letter += (char)13;
+                    }
+                    chars[i] = letter;
+                }
+                else if (letter >= 'A' && letter <= 'Z')
+                {
+                    if (letter > 'M')
+                    {
+                        letter -= (char)13;
+                    }
+                    else
+                    {
+                        letter += (char)13;
+                    }
+                    chars[i] = letter;
+                }
+            }
+            return new string(chars);
         }
 
         public string Decrypt()
