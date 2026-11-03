@@ -20,52 +20,25 @@ namespace Lab3A
             {
                 DisplayMenu();
 
-                // Error checking for user input
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     Console.WriteLine();
                     switch (choice)
                     {
                         case 1:
-                            foreach (var media in mediaList.OfType<Book>())
-                                Console.WriteLine($"Book: {media.Title} ({media.Year}) - Author: {media.Author}");
+                            ListBooks(mediaList);
                             break;
                         case 2:
-                            foreach (var media in mediaList.OfType<Movie>())
-                                Console.WriteLine($"Movie: {media.Title} ({media.Year}) - Director: {media.Director}");
+                            ListMovies(mediaList);
                             break;
                         case 3:
-                            foreach (var media in mediaList.OfType<Song>())
-                                Console.WriteLine($"Song: {media.Title} ({media.Year}) - Album: {media.Album} - Artist: {media.Artist}");
+                            ListSongs(mediaList);
                             break;
                         case 4:
-                            foreach (var media in mediaList)
-                            {
-                                if (media is Book b) Console.WriteLine($"Book: {b.Title} ({b.Year}) - Author: {b.Author}");
-                                else if (media is Movie m) Console.WriteLine($"Movie: {m.Title} ({m.Year}) - Director: {m.Director}");
-                                else if (media is Song s) Console.WriteLine($"Song: {s.Title} ({s.Year}) - Album: {s.Album} - Artist: {s.Artist}");
-                            }
+                            ListAllMedia(mediaList);
                             break;
                         case 5:
-                            Console.Write("Enter search string: ");
-                            string searchKey = Console.ReadLine();
-                            bool found = false;
-                            Console.WriteLine();
-
-                            foreach (var media in mediaList)
-                            {
-                                if (media.Search(searchKey))
-                                {
-                                    found = true;
-                                    if (media is Book b)
-                                        Console.WriteLine($"Book: {b.Title} ({b.Year}) - Author: {b.Author}\nSummary: {b.Decrypt()}\n");
-                                    else if (media is Movie m)
-                                        Console.WriteLine($"Movie: {m.Title} ({m.Year}) - Director: {m.Director}\nSummary: {m.Decrypt()}\n");
-                                    else if (media is Song s)
-                                        Console.WriteLine($"Song: {s.Title} ({s.Year}) - Album: {s.Album} - Artist: {s.Artist}\n");
-                                }
-                            }
-                            if (!found) Console.WriteLine("No matching media found.");
+                            SearchMedia(mediaList);
                             break;
                         case 6:
                             exit = true;
@@ -147,6 +120,62 @@ namespace Lab3A
             Console.Write("Enter your choice: ");
         }
 
+        static void ListBooks(List<Media> mediaList)
+        {
+            foreach (var media in mediaList.OfType<Book>())
+            {
+                Console.WriteLine($"Book: {media.Title} ({media.Year}) - Author: {media.Author}");
+            }
+        }
+
+        static void ListMovies(List<Media> mediaList)
+        {
+            foreach (var media in mediaList.OfType<Movie>())
+            {
+                Console.WriteLine($"Movie: {media.Title} ({media.Year}) - Director: {media.Director}");
+            }
+        }
+
+        static void ListSongs(List<Media> mediaList)
+        {
+            foreach (var media in mediaList.OfType<Song>())
+            {
+                Console.WriteLine($"Song: {media.Title} ({media.Year}) - Album: {media.Album} - Artist: {media.Artist}");
+            }
+        }
+
+        static void ListAllMedia(List<Media> mediaList)
+        {
+            foreach (var media in mediaList)
+            {
+                if (media is Book b) Console.WriteLine($"Book: {b.Title} ({b.Year}) - Author: {b.Author}");
+                else if (media is Movie m) Console.WriteLine($"Movie: {m.Title} ({m.Year}) - Director: {m.Director}");
+                else if (media is Song s) Console.WriteLine($"Song: {s.Title} ({s.Year}) - Album: {s.Album} - Artist: {s.Artist}");
+            }
+        }
+
+        static void SearchMedia(List<Media> mediaList)
+        {
+            Console.Write("Enter search string: ");
+            string searchKey = Console.ReadLine();
+            bool found = false;
+            Console.WriteLine();
+
+            foreach (var media in mediaList)
+            {
+                if (media.Search(searchKey))
+                {
+                    found = true;
+                    if (media is Book b)
+                        Console.WriteLine($"Book: {b.Title} ({b.Year}) - Author: {b.Author}\nSummary: {b.Decrypt()}\n");
+                    else if (media is Movie m)
+                        Console.WriteLine($"Movie: {m.Title} ({m.Year}) - Director: {m.Director}\nSummary: {m.Decrypt()}\n");
+                    else if (media is Song s)
+                        Console.WriteLine($"Song: {s.Title} ({s.Year}) - Album: {s.Album} - Artist: {s.Artist}\n");
+                }
+            }
+            if (!found) Console.WriteLine("No matching media found.");
+        }
 
     }
 }
