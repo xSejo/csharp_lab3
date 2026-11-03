@@ -54,7 +54,20 @@ namespace Lab3B
 
         private void resetButton_Click(object sender, EventArgs e)
         {
+            hairdresserComboBox.SelectedIndex = 0;
 
+            listServices.ClearSelected();
+
+            listChargedItems.Items.Clear();
+            listPrices.Items.Clear();
+
+            totalPriceLabel.Text = "";
+
+            addServiceButton.Enabled = false;
+            calculateButton.Enabled = false;
+
+            hairdresserComboBox.Enabled = true;
+            hairdresserComboBox.Focus();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
