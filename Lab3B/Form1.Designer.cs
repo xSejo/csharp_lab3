@@ -47,6 +47,16 @@
             // hairdresserComboBox
             // 
             this.hairdresserComboBox.FormattingEnabled = true;
+            this.hairdresserComboBox.Items.AddRange(new object[] {
+            "Jane Samley",
+            "",
+            "Pat Johnson",
+            "",
+            "Ron Chambers",
+            "",
+            "Sue Pallon",
+            "",
+            "Laurie Renkins"});
             this.hairdresserComboBox.Location = new System.Drawing.Point(41, 56);
             this.hairdresserComboBox.Name = "hairdresserComboBox";
             this.hairdresserComboBox.Size = new System.Drawing.Size(165, 21);
@@ -56,6 +66,13 @@
             // listServices
             // 
             this.listServices.FormattingEnabled = true;
+            this.listServices.Items.AddRange(new object[] {
+            "Cut",
+            "Wash, blow-dry, and style",
+            "Colour",
+            "Highlights",
+            "Extensions",
+            "Up-do"});
             this.listServices.Location = new System.Drawing.Point(235, 56);
             this.listServices.Name = "listServices";
             this.listServices.Size = new System.Drawing.Size(182, 199);
@@ -146,7 +163,6 @@
             // 
             // resetButton
             // 
-            this.resetButton.Enabled = false;
             this.resetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.resetButton.Location = new System.Drawing.Point(580, 420);
             this.resetButton.Name = "resetButton";
@@ -158,7 +174,6 @@
             // 
             // exitButton
             // 
-            this.exitButton.Enabled = false;
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.exitButton.Location = new System.Drawing.Point(713, 420);
             this.exitButton.Name = "exitButton";

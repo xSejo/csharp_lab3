@@ -1,7 +1,7 @@
 ﻿/*
   Name: Joseph Perez
   Student Number: 000977171
-  Date: November 01 2026
+  Date: November 01, 2026
   Purpose: A Windows Forms App that determines pricing for a hair salon.
   Statement of Authorship: I certify that this material is my original work. No other person's work has been used without due acknowledgement.
 */
@@ -18,20 +18,28 @@ using System.Windows.Forms;
 namespace Lab3B
 {
     /// <summary>
-    /// Represents the main form of the Perfect Cut Hair Salon application.
+    /// Main window for the Perfect Cut Hair Salon pricing calculator.
     /// </summary>
     public partial class Form1 : Form
     {
         /// <summary>
-        /// Initializes a new instance of the Form1 class.
+        /// Sets up the form, selects the first hairdresser by default, and disables the action buttons until a service is picked.
         /// </summary>
         public Form1()
         {
             InitializeComponent();
+
+            if (hairdresserComboBox.Items.Count > 0)
+            {
+                hairdresserComboBox.SelectedIndex = 0;
+            }
+
+            addServiceButton.Enabled = false;
+            calculateButton.Enabled = false;
         }
 
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the listServices control to enable the add service button.
+        /// Turns on the "Add Service" button as soon as the user clicks a service in the list.
         /// </summary>
         private void listServices_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -39,10 +47,14 @@ namespace Lab3B
             {
                 addServiceButton.Enabled = true;
             }
+            else
+            {
+                addServiceButton.Enabled = false;
+            }
         }
 
         /// <summary>
-        /// Adds the selected hairdresser and services to the receipt list boxes and updates UI state.
+        /// Adds the chosen hairdresser (on the first click) and any selected services to the receipt and price lists.
         /// </summary>
         private void addServiceButton_Click(object sender, EventArgs e)
         {
@@ -55,10 +67,37 @@ namespace Lab3B
             if (listChargedItems.Items.Count == 0)
             {
                 string hairdresser = hairdresserComboBox.SelectedItem.ToString();
-                listChargedItems.Items.Add(hairdresser);
+                decimal hairdresserRate = 0m;
 
-                string[] hairdresserParts = hairdresser.Split('$');
-                listPrices.Items.Add(hairdresserParts[1]);
+                if (hairdresser.Contains("$"))
+                {
+                    string[] hairdresserParts = hairdresser.Split('$');
+                    hairdresserRate = decimal.Parse(hairdresserParts[1]);
+                }
+                else
+                {
+                    switch (hairdresserComboBox.SelectedIndex)
+                    {
+                        case 0:
+                            hairdresserRate = 30m;
+                            break;
+                        case 1:
+                            hairdresserRate = 45m;
+                            break;
+                        case 2:
+                            hairdresserRate = 40m;
+                            break;
+                        case 3:
+                            hairdresserRate = 50m;
+                            break;
+                        case 4:
+                            hairdresserRate = 55m;
+                            break;
+                    }
+                }
+
+                listChargedItems.Items.Add(hairdresser);
+                listPrices.Items.Add($"{hairdresserRate:C}");
 
                 hairdresserComboBox.Enabled = false;
                 calculateButton.Enabled = true;
@@ -67,10 +106,41 @@ namespace Lab3B
             foreach (var item in listServices.SelectedItems)
             {
                 string service = item.ToString();
-                listChargedItems.Items.Add(service);
+                decimal serviceRate = 0m;
 
-                string[] serviceParts = service.Split('$');
-                listPrices.Items.Add(serviceParts[1]);
+                if (service.Contains("$"))
+                {
+                    string[] serviceParts = service.Split('$');
+                    serviceRate = decimal.Parse(serviceParts[1]);
+                }
+                else
+                {
+                    switch (service)
+                    {
+                        case "Cut":
+                            serviceRate = 30m;
+                            break;
+                        case "Wash, blow-dry, and style":
+                            serviceRate = 20m;
+                            break;
+                        case "Colour":
+                            serviceRate = 40m;
+                            break;
+                        case "Highlights":
+                            serviceRate = 50m;
+                            break;
+                        case "Extension":
+                        case "Extensions":
+                            serviceRate = 200m;
+                            break;
+                        case "Up-do":
+                            serviceRate = 60m;
+                            break;
+                    }
+                }
+
+                listChargedItems.Items.Add(service);
+                listPrices.Items.Add($"{serviceRate:C}");
             }
 
             listServices.ClearSelected();
@@ -78,7 +148,7 @@ namespace Lab3B
         }
 
         /// <summary>
-        /// Calculates the total cost of all items in the prices list box and formats it as currency.
+        /// Adds up all the prices in the Price list and displays the final total.
         /// </summary>
         private void calculateButton_Click(object sender, EventArgs e)
         {
@@ -86,18 +156,22 @@ namespace Lab3B
 
             foreach (var item in listPrices.Items)
             {
-                total += decimal.Parse(item.ToString());
+                string priceText = item.ToString().Replace("$", "");
+                total += decimal.Parse(priceText);
             }
 
             totalPriceLabel.Text = $"{total:C}";
         }
 
         /// <summary>
-        /// Resets the form back to its default startup state.
+        /// Clears the receipt lists and total price, and resets the form back to the beginning.
         /// </summary>
         private void resetButton_Click(object sender, EventArgs e)
         {
-            hairdresserComboBox.SelectedIndex = 0;
+            if (hairdresserComboBox.Items.Count > 0)
+            {
+                hairdresserComboBox.SelectedIndex = 0;
+            }
 
             listServices.ClearSelected();
             listChargedItems.Items.Clear();
@@ -112,7 +186,7 @@ namespace Lab3B
         }
 
         /// <summary>
-        /// Exits the application.
+        /// Closes the program when the Exit button is clicked.
         /// </summary>
         private void exitButton_Click(object sender, EventArgs e)
         {
@@ -120,22 +194,22 @@ namespace Lab3B
         }
 
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the listChargedItems control.
+        /// Unused event handler for the Charged Items list box.
         /// </summary>
         private void listChargedItems_SelectedIndexChanged(object sender, EventArgs e) { }
 
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the listPrices control.
+        /// Unused event handler for the Prices list box.
         /// </summary>
         private void listPrices_SelectedIndexChanged(object sender, EventArgs e) { }
 
         /// <summary>
-        /// Handles the Click event of the totalPriceLabel control.
+        /// Unused event handler for the Total Price label.
         /// </summary>
         private void totalPriceLabel_Click(object sender, EventArgs e) { }
 
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the hairdresserComboBox control.
+        /// Unused event handler for the Hairdresser dropdown.
         /// </summary>
         private void hairdresserComboBox_SelectedIndexChanged(object sender, EventArgs e) { }
     }
